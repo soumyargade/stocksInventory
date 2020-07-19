@@ -16,7 +16,9 @@
         <clr-dg-cell>${{ stock.price }}</clr-dg-cell>
         <clr-dg-cell>${{ stock.previousPrice }}</clr-dg-cell>
         <clr-dg-cell>${{ stock.openingPrice }}</clr-dg-cell>
-        <clr-dg-cell>{{ ((stock.price-stock.openingPrice)/stock.price)*100 | number:'1.2-2' }}%</clr-dg-cell>
+        <clr-dg-cell 
+            [ngStyle]="{'color': getProfit(stock) > 0 ? 'green': 'red'}">
+            {{ getProfit(stock) | number:'1.2-2' }}%</clr-dg-cell>
         <clr-dg-cell>{{ stock.name }}</clr-dg-cell>
         <clr-dg-cell>{{ stock.description }}</clr-dg-cell>
         <clr-dg-cell>{{ stock.lastUpdatedDate }}</clr-dg-cell>

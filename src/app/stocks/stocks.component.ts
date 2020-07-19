@@ -14,10 +14,16 @@ export class StocksComponent implements OnInit {
   stocks$: Observable<IStock[]> = this.stockService.stocks$;
 
   constructor(private stockService: StockService) { }
+
   trackById(index, item) {
     return item.id
   }
 
-  ngOnInit(): void { }
+  // Calculates net profit based off the opening and current price
+  getProfit(stock: IStock) {
+    return ((stock.price-stock.openingPrice)/stock.price)*100;
+  }
 
+  ngOnInit(): void { }
+  
 }
