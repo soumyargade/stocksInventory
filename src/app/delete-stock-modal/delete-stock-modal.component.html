@@ -1,7 +1,16 @@
-<clr-modal [clrModalOpen]="true">
+<clr-modal [clrModalOpen]="true" (click)="cancelDelete()">
     <h3 class="modal-title">Delete Stock</h3>
 
     <div class="modal-body">
+        <clr-alert 
+            [clrAlertSizeSmall]="true" 
+            [clrAlertClosable]="false" 
+            [clrAlertType]="'warning'" 
+            *ngIf="stock?.openingPrice > 300">
+            <clr-alert-item>
+                <span class="alert-text">This stock is on the rise!</span>
+            </clr-alert-item>
+        </clr-alert>
         <p>Are you sure you want to delete?</p>
     </div>
     
