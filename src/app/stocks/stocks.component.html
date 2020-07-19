@@ -1,8 +1,29 @@
 <h1>Stocks</h1>
 <clr-datagrid>
-    <clr-dg-column clrDgField="name">Name</clr-dg-column>
     <clr-dg-column clrDgField="ticker">Ticker</clr-dg-column>
-    <clr-dg-column>Description</clr-dg-column>
     <clr-dg-column clrDgField="price">Price</clr-dg-column>
+    <clr-dg-column clrDgField="previousPrice">Previous Price</clr-dg-column>
+    <clr-dg-column clrDgField="openingPrice">Opening Price</clr-dg-column>
+    <clr-dg-column clrDgField="percentProfit">Percent Gain/Loss</clr-dg-column>
+    <clr-dg-column clrDgField="name">Name</clr-dg-column>
+    <clr-dg-column>Description</clr-dg-column>
     <clr-dg-column>Last Updated</clr-dg-column>
+
+    <clr-dg-row 
+        *clrDgItems="let stock of stocks$ | async; trackBy trackById" 
+        [clrDgItem]="stock">
+        <clr-dg-cell>{{ stock.ticker }}</clr-dg-cell>
+        <clr-dg-cell>${{ stock.price }}</clr-dg-cell>
+        <clr-dg-cell>${{ stock.previousPrice }}</clr-dg-cell>
+        <clr-dg-cell>${{ stock.openingPrice }}</clr-dg-cell>
+        <clr-dg-cell>{{ ((stock.price-stock.openingPrice)/stock.price)*100 | number:'1.2-2' }}%</clr-dg-cell>
+        <clr-dg-cell>{{ stock.name }}</clr-dg-cell>
+        <clr-dg-cell>{{ stock.description }}</clr-dg-cell>
+        <clr-dg-cell>{{ stock.lastUpdatedDate }}</clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>
+        <clr-dg-pagination></clr-dg-pagination>
+    </clr-dg-footer>
+
 </clr-datagrid>
