@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'in-stock',
@@ -14,8 +14,8 @@ export class StockComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.stockForm = this.formBuilder.group({
-      ticker: '', 
-      name: '', 
+      ticker: ['', Validators.required], 
+      name: ['', Validators.required], 
       description: ''
     })
   }
