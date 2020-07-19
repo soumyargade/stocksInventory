@@ -1,0 +1,18 @@
+<clr-modal [clrModalOpen]="true">
+    <h3 class="modal-title">Delete Stock</h3>
+
+    <div class="modal-body">
+        <p>Are you sure you want to delete?</p>
+    </div>
+    
+    <div class="modal-footer">
+        <button 
+            type="button" 
+            class="btn btn-outline" 
+            (click)="cancelDelete()">Cancel</button>
+        <button 
+            type="button" 
+            class="btn btn-outline" 
+            (click)="confirmDelete()">Delete</button>
+    </div>
+</clr-modal>

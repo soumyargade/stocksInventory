@@ -1,4 +1,6 @@
 <h1>Stocks</h1>
+<button class="btn btn-outline btn-sm" (click)="addStock()">Add Stock</button>
+
 <clr-datagrid>
     <clr-dg-column clrDgField="ticker">Ticker</clr-dg-column>
     <clr-dg-column clrDgField="price">Price</clr-dg-column>
@@ -12,6 +14,11 @@
     <clr-dg-row 
         *clrDgItems="let stock of stocks$ | async; trackBy trackById" 
         [clrDgItem]="stock">
+        <clr-dg-action-overflow>
+            <button class="action-item" (click)="onEdit(stock)">Edit</button>
+            <button class="action-item" (click)="onDelete(stock)">Delete</button>
+        </clr-dg-action-overflow>
+
         <clr-dg-cell>{{ stock.ticker }}</clr-dg-cell>
         <clr-dg-cell>${{ stock.price }}</clr-dg-cell>
         <clr-dg-cell>${{ stock.previousPrice }}</clr-dg-cell>
@@ -30,5 +37,10 @@
             {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of {{ pagination.totalItems }} stocks
         </clr-dg-pagination>
     </clr-dg-footer>
-
 </clr-datagrid>
+
+<in-delete-stock-modal 
+    *ngIf="delete" 
+    [stock]="stockToBeDeleted" 
+    (cancel)="handleCancel()" 
+    (confirm)="confirmDelete()"></in-delete-stock-modal>

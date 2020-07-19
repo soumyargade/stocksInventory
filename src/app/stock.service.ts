@@ -88,11 +88,22 @@ export class StockService {
     name: 'Cisco', 
     description: 'Telecommunications', 
     lastUpdatedDate: '7/17/20 7:59PM'
-  }
-];
+  }];
 
-// Creating a new behavior subject
-stocks$ = new BehaviorSubject<IStock[]>(this.stocks);
+  // Creating a new behavior subject
+  stocks$ = new BehaviorSubject<IStock[]>(this.stocks);
 
   constructor() { }
+
+  // Removes a stock from the list
+  removeStock(stock: IStock) {
+    const index = this.stocks.indexOf(stock);
+    this.stocks = [
+      // Doesn't include the end argument
+      ...this.stocks.slice(0, index), // Spreads indexes and values
+      // Rest of elements from stock after the index onwards
+      ...this.stocks.slice(index + 1)
+    ];
+    this.stocks$.next(this.stocks);
+  }
 }

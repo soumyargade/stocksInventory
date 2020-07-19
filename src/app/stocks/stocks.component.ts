@@ -11,6 +11,8 @@ import { IStock, StockService } from '../stock.service';
 })
 export class StocksComponent implements OnInit {
 
+  delete = false;
+  stockToBeDeleted;
   stocks$: Observable<IStock[]> = this.stockService.stocks$;
 
   constructor(private stockService: StockService) { }
@@ -22,6 +24,32 @@ export class StocksComponent implements OnInit {
   // Calculates net profit based off the opening and current price
   getProfit(stock: IStock) {
     return ((stock.price-stock.openingPrice)/stock.price)*100;
+  }
+
+  addStock() {
+    // ...
+  }
+
+  onEdit(stock: IStock) {
+    // ...
+  }
+
+  // Assign the product to be deleted
+  onDelete(stock: IStock) {
+    this.delete = true;
+    this.stockToBeDeleted = stock;
+  }
+
+  // Decided to cancel the delete
+  handleCancel() {
+    this.delete = false;
+  }
+
+  confirmDelete() {
+    // Toggle delete flag to false
+    this.handleCancel();
+    // Removing the stock
+    this.stockService.removeStock(this.stockToBeDeleted);
   }
 
   ngOnInit(): void { }
