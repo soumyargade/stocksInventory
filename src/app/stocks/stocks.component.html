@@ -25,7 +25,10 @@
     </clr-dg-row>
 
     <clr-dg-footer>
-        <clr-dg-pagination></clr-dg-pagination>
+        <clr-dg-pagination #pagination [clrDgPageSize]="5">
+            <clr-dg-page-size [clrPageSizeOptions]="[5,10,20]">Stocks Per Page</clr-dg-page-size>
+            {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of {{ pagination.totalItems }} stocks
+        </clr-dg-pagination>
     </clr-dg-footer>
 
 </clr-datagrid>

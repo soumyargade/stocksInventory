@@ -77,6 +77,17 @@ export class StockService {
     name: 'Microsoft', 
     description: 'Computer company', 
     lastUpdatedDate: '7/17/20 7:59PM'
+  }, 
+  {
+    id: generateId(), 
+    ticker: 'CSCO', 
+    price: 46.75, 
+    previousPrice: 46.70, 
+    openingPrice: 42.00, 
+    percentProfit: 0, 
+    name: 'Cisco', 
+    description: 'Telecommunications', 
+    lastUpdatedDate: '7/17/20 7:59PM'
   }
 ];
 
