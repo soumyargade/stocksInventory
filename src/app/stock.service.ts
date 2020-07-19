@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 export interface IStock {
   id: number;
@@ -23,7 +24,8 @@ function generateId() {
 // Service to store all stocks in order for interaction
 export class StockService {
 
-  stocks: IStock[] = [{
+  stocks = [];
+  /*
     id: generateId(), 
     ticker: 'TSLA', 
     price: 1500.84, 
@@ -88,12 +90,54 @@ export class StockService {
     name: 'Cisco', 
     description: 'Telecommunications', 
     lastUpdatedDate: '7/17/20 7:59PM'
-  }];
+  }];*/
 
   // Creating a new behavior subject
   stocks$ = new BehaviorSubject<IStock[]>(this.stocks);
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getStocksData(tickers: string[]) {
+
+    for (var index in tickers) {
+      var tickerFetched = tickers[index];
+      console.log(tickerFetched);
+      this.setTicker(tickers[index]);
+      this.http.get<IStock[]>(
+        'https://finnhub.io/api/v1/quote?symbol='+tickers[index]+'&token=bs9gkqvrh5rahoaogp5g')
+        .subscribe(response => {
+            console.log(tickers[index]);
+            this.stocks.push(
+              this.createStockData(response)
+              );
+            console.log("creating stock data for : " + tickerFetched);
+        }
+      );
+    }
+    return this.stocks$;
+  }
+
+  tickerFetched;
+  setTicker(ticker) {
+    this.tickerFetched = ticker;
+    console.log("ticker from inside : " + this.tickerFetched)
+  }
+
+  createStockData(response):Object {
+    console.log("creating object for : " + response.ticker);
+    var stockObj = new Object();
+    stockObj["id"] = generateId();
+    stockObj["ticker"] = this.tickerFetched;
+    stockObj["price"] = response.c;
+    stockObj["previousPrice"] = response.pc;
+    stockObj["openingPrice"] = response.o;
+    stockObj["percentProfit"] = 0;
+    stockObj["name"] = 'Cisco';
+    stockObj["description"] = 'Telecommunications';
+    stockObj["lastUpdatedDate"] = response.t;
+
+    return stockObj
+  }
 
   // Removes a stock from the list
   removeStock(stock: IStock) {

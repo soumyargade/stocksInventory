@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
@@ -20,7 +21,8 @@ import { StockComponent } from './stock/stock.component';
     BrowserModule,
     ClarityModule,
     BrowserAnimationsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

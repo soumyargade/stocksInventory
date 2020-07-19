@@ -11,9 +11,10 @@ import { IStock, StockService } from '../stock.service';
 })
 export class StocksComponent implements OnInit {
 
+  tickers = ['TSLA', 'GOOGL', 'FB'];
   delete = false;
   stockToBeDeleted;
-  stocks$: Observable<IStock[]> = this.stockService.stocks$;
+  stocks$: Observable<IStock[]> = this.stockService.getStocksData(this.tickers);
 
   constructor(private stockService: StockService) { }
 
