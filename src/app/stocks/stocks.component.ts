@@ -16,7 +16,7 @@ export class StocksComponent implements OnInit {
   // Creating a new behavior subject
   stocks$ = new BehaviorSubject<IStock[]>(this.stocks);
 
-  tickers = ['TSLA', 'GOOGL', 'FB'];
+  tickers = ['TSLA', 'GOOGL', 'FB', 'AMZN', 'CMG', 'MSFT', 'AAPL', 'CSCO', 'KO', 'NFLX'];
   delete = false;
   stockToBeDeleted;
 

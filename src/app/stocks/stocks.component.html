@@ -4,12 +4,12 @@
 <clr-datagrid>
     <clr-dg-column clrDgField="ticker">Ticker</clr-dg-column>
     <clr-dg-column clrDgField="price">Price</clr-dg-column>
-    <clr-dg-column clrDgField="previousPrice">Previous Price</clr-dg-column>
+    <!--clr-dg-column clrDgField="previousPrice">Previous Price</clr-dg-column-->
     <clr-dg-column clrDgField="openingPrice">Opening Price</clr-dg-column>
     <clr-dg-column clrDgField="percentProfit">Percent Gain/Loss</clr-dg-column>
     <clr-dg-column clrDgField="name">Name</clr-dg-column>
     <clr-dg-column>Description</clr-dg-column>
-    <clr-dg-column>Last Updated</clr-dg-column>
+    <!--clr-dg-column>Last Updated</clr-dg-column-->
 
     <clr-dg-row 
         *clrDgItems="let stock of stocks$ | async; trackBy trackById" 
@@ -21,18 +21,18 @@
 
         <clr-dg-cell>{{ stock.ticker }}</clr-dg-cell>
         <clr-dg-cell>${{ stock.price }}</clr-dg-cell>
-        <clr-dg-cell>${{ stock.previousPrice }}</clr-dg-cell>
+        <!--clr-dg-cell>${{ stock.previousPrice }}</clr-dg-cell-->
         <clr-dg-cell>${{ stock.openingPrice }}</clr-dg-cell>
         <clr-dg-cell 
             [ngStyle]="{'color': getProfit(stock) > 0 ? 'green': 'red'}">
             {{ getProfit(stock) | number:'1.2-2' }}%</clr-dg-cell>
         <clr-dg-cell>{{ stock.name }}</clr-dg-cell>
         <clr-dg-cell>{{ stock.description }}</clr-dg-cell>
-        <clr-dg-cell>{{ stock.lastUpdatedDate | date:'MM/dd/yy hh:mm:ss a' }}</clr-dg-cell>
+        <!--clr-dg-cell>{{ stock.lastUpdatedDate | date:'MM/dd/yy hh:mm:ss a' }}</clr-dg-cell-->
     </clr-dg-row>
 
     <clr-dg-footer>
-        <clr-dg-pagination #pagination [clrDgPageSize]="5">
+        <clr-dg-pagination #pagination [clrDgPageSize]="10">
             <clr-dg-page-size [clrPageSizeOptions]="[5,10,20]">Stocks Per Page</clr-dg-page-size>
             {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of {{ pagination.totalItems }} stocks
         </clr-dg-pagination>
