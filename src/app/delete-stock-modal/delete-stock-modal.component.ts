@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IStock } from '../stock.service';
 
 @Component({
   selector: 'in-delete-stock-modal',
@@ -13,6 +14,10 @@ export class DeleteStockModalComponent implements OnInit {
 
   constructor() { }
   ngOnInit(): void { }
+
+  getProfit(stock: IStock) {
+    return ((stock.price-stock.openingPrice)/stock.price)*100;
+  }
 
   // Cancel deletion of the stock
   cancelDelete() {

@@ -28,7 +28,7 @@
             {{ getProfit(stock) | number:'1.2-2' }}%</clr-dg-cell>
         <clr-dg-cell>{{ stock.name }}</clr-dg-cell>
         <clr-dg-cell>{{ stock.description }}</clr-dg-cell>
-        <clr-dg-cell>{{ stock.lastUpdatedDate }}</clr-dg-cell>
+        <clr-dg-cell>{{ stock.lastUpdatedDate | date:'MM/dd/yy hh:mm:ss a' }}</clr-dg-cell>
     </clr-dg-row>
 
     <clr-dg-footer>
@@ -45,4 +45,4 @@
     (cancel)="handleCancel()" 
     (confirm)="confirmDelete()"></in-delete-stock-modal>
 
-<in-stock></in-stock>
+<!--in-stock></in-stock-->

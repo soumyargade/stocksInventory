@@ -6,7 +6,7 @@
             [clrAlertSizeSmall]="true" 
             [clrAlertClosable]="false" 
             [clrAlertType]="'warning'" 
-            *ngIf="stock?.openingPrice > 300">
+            *ngIf="getProfit(stock) > 0">
             <clr-alert-item>
                 <span class="alert-text">This stock is on the rise!</span>
             </clr-alert-item>

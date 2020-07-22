@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { IStock, StockService } from '../stock.service';
 
 @Component({
@@ -7,14 +7,18 @@ import { IStock, StockService } from '../stock.service';
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.scss'], 
   // Using immutability to get the stocks, leads to better performance
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StocksComponent implements OnInit {
+
+  stocks = [];
+
+  // Creating a new behavior subject
+  stocks$ = new BehaviorSubject<IStock[]>(this.stocks);
 
   tickers = ['TSLA', 'GOOGL', 'FB'];
   delete = false;
   stockToBeDeleted;
-  stocks$: Observable<IStock[]> = this.stockService.getStocksData(this.tickers);
 
   constructor(private stockService: StockService) { }
 
@@ -50,9 +54,86 @@ export class StocksComponent implements OnInit {
     // Toggle delete flag to false
     this.handleCancel();
     // Removing the stock
-    this.stockService.removeStock(this.stockToBeDeleted);
+    this.removeStock(this.stockToBeDeleted);
   }
 
-  ngOnInit(): void { }
-  
+  ngOnInit(): void {
+    this.getStocksData();
+    setInterval(() => {
+      this.getStocksData();
+    }, 60000);
+  }
+
+  generateId() {
+    return Math.floor(Math.random() * 1000);
+  }
+
+  getStocksData() {
+    // Getting data for each stock ticker
+    this.tickers.forEach((ticker) => {
+      var stockObj;
+      // Creating two streams of data to subscribe to
+      let stream1: Observable<any> = this.stockService.getStockDataFor(ticker);
+      let stream2: Observable<any> = this.stockService.getStockInfoFor(ticker);
+
+      combineLatest(stream1, stream2).subscribe((response) => {
+        console.log(response);
+        stockObj = this.createStockData(response, ticker);
+        // this.stocks.push(stockObj);
+        this.updateStockInfo(stockObj);
+      });
+      // Gets the next stream of data
+      this.stocks$.next(this.stocks);
+    });
+    // this.stocks$ = new BehaviorSubject<IStock[]>(this.stocks);
+  }
+
+  createStockData(response, ticker):Object {
+    // Creating a new stock object with the data that was retrieved
+    var stockObj = new Object();
+    stockObj["id"] = this.generateId();
+    stockObj["ticker"] = ticker;
+    stockObj["price"] = response[0].c;
+    stockObj["openingPrice"] = response[0].o;
+    stockObj["percentProfit"] = 0;
+    stockObj["name"] = response[1].name;
+    stockObj["description"] = response[1].finnhubIndustry;
+
+    return stockObj
+  }
+
+  updateStockInfo(stockObj) {
+    var index = 0;
+    var elementIndex = -1;
+    this.stocks.forEach((element) => {
+      // The stock is in the list
+      // Trying to figure out which index it is at
+      if (element.ticker === stockObj.ticker) {
+        elementIndex = index;
+      }
+      index++;
+    });
+
+    // The stock was not already in the list
+    if (elementIndex == -1) {
+      this.stocks.push(stockObj);
+    } else {
+      // The stock was in the list, updating prices
+      let updateStockObj = this.stocks[elementIndex];
+      updateStockObj.price = stockObj.price;
+      updateStockObj.previousPrice = stockObj.previousPrice;
+    }
+  }
+
+  // Removes a stock from the list
+  removeStock(stock: IStock) {
+    const index = this.stocks.indexOf(stock);
+    this.stocks = [
+      // Doesn't include the end argument
+      ...this.stocks.slice(0, index), // Spreads indexes and values
+      // Rest of elements from stock after the index onwards
+      ...this.stocks.slice(index + 1)
+    ];
+    this.stocks$.next(this.stocks);
+  }
 }
