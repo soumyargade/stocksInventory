@@ -19,6 +19,7 @@ export class StocksComponent implements OnInit {
   tickers = ['TSLA', 'GOOGL', 'FB', 'AMZN', 'CMG', 'MSFT', 'AAPL', 'CSCO', 'KO', 'NFLX'];
   delete = false;
   stockToBeDeleted;
+  lastUpdatedTime;
 
   constructor(private stockService: StockService) { }
 
@@ -32,10 +33,6 @@ export class StocksComponent implements OnInit {
   }
 
   addStock() {
-    // ...
-  }
-
-  onEdit(stock: IStock) {
     // ...
   }
 
@@ -78,17 +75,24 @@ export class StocksComponent implements OnInit {
 
       combineLatest(stream1, stream2).subscribe((response) => {
         console.log(response);
+        this.lastUpdatedTime = new Date().getTime();
         stockObj = this.createStockData(response, ticker);
+        this.stocks.sort((a,b) => {
+          return this.getProfit(b) - this.getProfit(a);
+        });
         // this.stocks.push(stockObj);
         this.updateStockInfo(stockObj);
       });
+
+      
+
       // Gets the next stream of data
       this.stocks$.next(this.stocks);
     });
     // this.stocks$ = new BehaviorSubject<IStock[]>(this.stocks);
   }
 
-  createStockData(response, ticker):Object {
+  createStockData(response, ticker): Object {
     // Creating a new stock object with the data that was retrieved
     var stockObj = new Object();
     stockObj["id"] = this.generateId();

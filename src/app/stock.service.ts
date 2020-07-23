@@ -6,12 +6,10 @@ export interface IStock {
   id: number;
   ticker: string;
   price: number;
-  previousPrice: number;
   openingPrice: number;
   percentProfit: number;
   name: string;
   description: string;
-  lastUpdatedDate: string;
 }
 
 @Injectable({
@@ -24,11 +22,11 @@ export class StockService {
 
   // Getting data for the stock prices
   getStockDataFor(ticker): Observable<any> {
-    return this.http.get<IStock[]>('https://finnhub.io/api/v1/quote?symbol='+ticker+'&token=bs9gkqvrh5rahoaogp5g');
+    return this.http.get<IStock[]>('https://finnhub.io/api/v1/quote?symbol='+ticker+'&token=bsc98t7rh5rcbdomtp6g');
   }
-  
+
   // Getting data for the stock name and sector
   getStockInfoFor(ticker): Observable<any> {
-    return this.http.get('https://finnhub.io/api/v1/stock/profile2?symbol='+ticker+'&token=bs9gkqvrh5rahoaogp5g');
+    return this.http.get('https://finnhub.io/api/v1/stock/profile2?symbol='+ticker+'&token=bsc98t7rh5rcbdomtp6g');
   }
 }
