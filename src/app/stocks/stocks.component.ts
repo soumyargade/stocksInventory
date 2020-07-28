@@ -78,10 +78,20 @@ export class StocksComponent implements OnInit {
     return Math.floor(Math.random() * 1000);
   }
 
+  getLastFetchedPrice() {
+    let index = this.stocks.length;
+    this.stocks.forEach((stock) => {
+      stock.lastFetchedPrice = stock.price;
+      index--;
+    });
+  }
+
   getStocksData() {
     // Getting data for each stock ticker
     this.tickers.forEach((ticker) => {
       var stockObj;
+      var index = 0;
+      
       // Creating two streams of data to subscribe to
       let stream1: Observable<any> = this.stockService.getStockDataFor(ticker);
       let stream2: Observable<any> = this.stockService.getStockInfoFor(ticker);
@@ -96,6 +106,7 @@ export class StocksComponent implements OnInit {
           return this.getProfit(b) - this.getProfit(a);
         });
       });
+      this.getLastFetchedPrice();
       // Gets the next stream of data
       this.stocks$.next(this.stocks);
     });
@@ -112,7 +123,6 @@ export class StocksComponent implements OnInit {
     stockObj["percentProfit"] = 0;
     stockObj["name"] = response[1].name;
     stockObj["description"] = response[1].finnhubIndustry;
-
     return stockObj
   }
 

@@ -1,10 +1,11 @@
 <!--h1>Stocks</h1-->
-<button class="btn btn-outline btn-sm" (click)="addStock()">Add Stock </button>
-<span style="float:right; padding-right: 20px;"><b>LAST UPDATED: {{ lastUpdatedTime | date:'hh:mm a' }}</b></span>
+<button class="btn btn-outline btn-lg" (click)="addStock()">Add Stock </button>
+<span style="float:right; padding-right: 5px; padding-top: 15px;"><b>LAST UPDATED: {{ lastUpdatedTime | date:'hh:mm:ss a' }}</b></span>
 
 <clr-datagrid>
     <clr-dg-column clrDgField="ticker">Ticker</clr-dg-column>
     <clr-dg-column clrDgField="price">Price</clr-dg-column>
+    <clr-dg-column>Last Fetched Price</clr-dg-column>
     <!--clr-dg-column clrDgField="previousPrice">Previous Price</clr-dg-column-->
     <clr-dg-column>Opening Price</clr-dg-column>
     <clr-dg-column clrDgField="percentProfit">Percent Gain/Loss</clr-dg-column>
@@ -21,6 +22,7 @@
 
         <clr-dg-cell>{{ stock.ticker }}</clr-dg-cell>
         <clr-dg-cell>${{ stock.price | number:'1.2-2' }}</clr-dg-cell>
+        <clr-dg-cell>${{ stock.lastFetchedPrice | number:'1.2-2' }}</clr-dg-cell>
         <!--clr-dg-cell>${{ stock.previousPrice }}</clr-dg-cell-->
         <clr-dg-cell>${{ stock.openingPrice | number:'1.2-2' }}</clr-dg-cell>
         <clr-dg-cell 

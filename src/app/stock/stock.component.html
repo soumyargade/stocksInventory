@@ -2,7 +2,7 @@
     <clr-wizard 
         #stockWizard 
         [clrWizardOpen]="true" 
-        clrWizardSize="lg" 
+        clrWizardSize="md" 
         (clrWizardOnCancel)="handleClose()">
 
         <clr-wizard-title>Add New Stock</clr-wizard-title>
@@ -12,7 +12,7 @@
         <clr-wizard-button [type]="'finish'" (click)="handleFinish()">Finish</clr-wizard-button>
 
         <clr-wizard-page>
-            <ng-template clrPageTitle>Enter Details</ng-template>
+            <ng-template clrPageTitle>Enter Ticker</ng-template>
                 <!--Input field for stock ticker-->
                 <clr-input-container>
                     <label for="ticker">Ticker *</label>
@@ -23,6 +23,7 @@
                         formControlName="ticker">
                     <clr-control-error>This Field is Required</clr-control-error>
                 </clr-input-container>
+                <p><small>Will be added to the list in the next page update.</small></p>
         </clr-wizard-page>
     </clr-wizard>
 </form>
