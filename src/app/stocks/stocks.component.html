@@ -45,4 +45,7 @@
     (cancel)="handleCancel()" 
     (confirm)="confirmDelete()"></in-delete-stock-modal>
 
-<!--in-stock></in-stock-->
+<in-stock 
+    *ngIf="showAddDialog" 
+    (cancel)="handleAddDialogCancel()" 
+    (finish)="handleAddDialogFinish($event)"></in-stock>

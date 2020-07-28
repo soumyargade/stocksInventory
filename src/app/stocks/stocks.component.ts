@@ -20,6 +20,7 @@ export class StocksComponent implements OnInit {
   delete = false;
   stockToBeDeleted;
   lastUpdatedTime;
+  showAddDialog = false;
 
   constructor(private stockService: StockService) { }
 
@@ -32,8 +33,20 @@ export class StocksComponent implements OnInit {
     return ((stock.price-stock.openingPrice)/stock.price)*100;
   }
 
+  // Executed when the add stock button is clicked
   addStock() {
-    // ...
+    this.showAddDialog = true;
+  }
+
+  // Executed when cancelling the add stock dialog
+  handleAddDialogCancel() {
+    this.showAddDialog = false;
+  }
+
+  // Executed when a stock is added
+  handleAddDialogFinish(ticker) {
+    this.tickers.push(ticker);
+    this.showAddDialog = false;
   }
 
   // Assign the product to be deleted
@@ -83,9 +96,6 @@ export class StocksComponent implements OnInit {
           return this.getProfit(b) - this.getProfit(a);
         });
       });
-
-      
-
       // Gets the next stream of data
       this.stocks$.next(this.stocks);
     });
