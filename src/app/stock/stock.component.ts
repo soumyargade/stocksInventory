@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -11,18 +11,24 @@ export class StockComponent implements OnInit {
 
   stockForm: FormGroup;
   @Input() stock;
+  @Output() cancel = new EventEmitter();
+  @Output() finish = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder) {
     this.stockForm = this.formBuilder.group({
-      ticker: ['', Validators.required], 
-      name: ['', Validators.required], 
-      description: ''
+      ticker: ['', Validators.required]
     })
   }
 
   ngOnInit(): void { }
 
+  // Cancelled adding a stock
   handleClose() {
-    // ...
+    this.cancel.emit();
+  }
+
+  // Finished adding a stock
+  handleFinish() {
+    this.finish.emit(this.stockForm.get("ticker").value);
   }
 }

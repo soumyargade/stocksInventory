@@ -5,11 +5,11 @@
         clrWizardSize="lg" 
         (clrWizardOnCancel)="handleClose()">
 
-        <clr-wizard-title>{{ stock? 'Edit Stock' : 'Add New Stock' }}</clr-wizard-title>
+        <clr-wizard-title>Add New Stock</clr-wizard-title>
         <clr-wizard-button [type]="'cancel'" (click)="handleClose()">Cancel</clr-wizard-button>
         <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
         <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
-        <clr-wizard-button [type]="'finish'" (click)="handleClose()">Finish</clr-wizard-button>
+        <clr-wizard-button [type]="'finish'" (click)="handleFinish()">Finish</clr-wizard-button>
 
         <clr-wizard-page>
             <ng-template clrPageTitle>Enter Details</ng-template>
@@ -23,27 +23,6 @@
                         formControlName="ticker">
                     <clr-control-error>This Field is Required</clr-control-error>
                 </clr-input-container>
-
-                <!--Input field for stock name-->
-                <clr-input-container>
-                    <label for="name">Name *</label>
-                    <input 
-                        clrInput type="text" 
-                        id="name" 
-                        placeholder="Tesla..." 
-                        formControlName="name">
-                    <clr-control-error>This Field is Required</clr-control-error>
-                </clr-input-container>
-
-                <!--Text area for stock description-->
-                <clr-textarea-container>
-                    <label for="description">Description</label>
-                    <textarea 
-                        clrTextarea 
-                        id="description" 
-                        placeholder="Car company..." 
-                        formControlName="description"></textarea>
-                </clr-textarea-container>
         </clr-wizard-page>
     </clr-wizard>
 </form>

@@ -77,11 +77,11 @@ export class StocksComponent implements OnInit {
         console.log(response);
         this.lastUpdatedTime = new Date().getTime();
         stockObj = this.createStockData(response, ticker);
+        // this.stocks.push(stockObj);
+        this.updateStockInfo(stockObj);
         this.stocks.sort((a,b) => {
           return this.getProfit(b) - this.getProfit(a);
         });
-        // this.stocks.push(stockObj);
-        this.updateStockInfo(stockObj);
       });
 
       

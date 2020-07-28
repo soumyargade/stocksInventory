@@ -6,8 +6,11 @@ export interface IStock {
   id: number;
   ticker: string;
   price: number;
-  openingPrice: number;
+  lastFetchedPrice: number;
+  currentRank: number;
+  previousRank: number;
   percentProfit: number;
+  openingPrice: number;
   name: string;
   description: string;
 }
