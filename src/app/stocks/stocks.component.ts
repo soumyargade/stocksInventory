@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { IStock, StockService } from '../stock.service';
+import { ClrDatagridComparatorInterface, ClrDatagridSortOrder } from '@clr/angular';
 
 @Component({
   selector: 'in-stocks',
